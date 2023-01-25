@@ -24,6 +24,7 @@ for abn ∈ abns
     if (acn < 100_000_000)
         continue
     end
+    
     abn_from_acn = Service.acn_to_abn(acn)
     @test Service.validate_abn!(abn_from_acn).is_valid
 end

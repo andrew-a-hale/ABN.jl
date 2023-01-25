@@ -16,7 +16,6 @@ end
 Abn() = Abn(nothing, nothing, false)
 Abn(abn) = Abn(abn, nothing, false)
 Abn(abn, acn) = Abn(abn, acn, false)
-Abn(abn, acn, is_valid) = Abn(abn, acn, is_valid)
 StructTypes.StructType(::Type{Abn}) = StructTypes.Mutable()
 StructTypes.idproperty(::Type{Abn}) = :abn
 

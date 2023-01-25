@@ -12,4 +12,3 @@ run docker run -p 8000:9111 abn-service
 
 # Todo
 - Integrate with ABR ABN lookup service to get business details
-- rename to avoid abbreviations and acronyms
