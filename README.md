@@ -1,5 +1,6 @@
 # ABN Microservice
-- Validate ABN
+A small project to learn Julia. This microservice has the following features;
+- Validate ABNs
 - Generate ABNs
 - Convert ACN to ABN
 

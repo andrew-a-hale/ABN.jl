@@ -3,12 +3,15 @@ module Service
 using ..Model
 using Pipe
 
+"""
+Weights used when validating or checking digits for an ABN.
+From: https://abr.business.gov.au/Help/AbnFormat
+"""
 const weighting = append!([10], range(1, 19, step=2))
 
-function check()
-    "ok!"
-end
-
+"""
+Appends 2 digits to the front of an 9 digit integer such that the 11 digit integer will pass ABN Validation Rules
+"""
 function append_abn_check_digit(seed::Vector{Int64})::Vector{Int64}
     # algorithm to find check digits for the seed
     weighted_sum = sum(append!([0, 0], seed) .* weighting)
@@ -19,15 +22,22 @@ function append_abn_check_digit(seed::Vector{Int64})::Vector{Int64}
     return append!([check_digits ÷ 10, check_digits % 10], seed)
 end
 
+"""
+Randomly generates an ABN that will pass ABN Validation Rules
+"""
 function generate_abn()
     # random seed
     seed = rand(0:9, 9) |> append_abn_check_digit
 
     # transform array of digits to int
     abn = sum(seed[i] * 10^(length(seed) - i) for i ∈ eachindex(seed))
-    return Model.Abn(abn)
+    return abn
 end
 
+"""
+Converts an ACN to an ABN by appending 2 digits to the front of a ACN
+"""
+acn_to_abn(acn::Any) = throw(ArgumentError("acn argument must be an integer"))
 function acn_to_abn(acn::Int)
     @assert length(digits(acn)) == 9 "acn must have 9 digits, had $(length(digits(acn)))"
 
@@ -36,10 +46,14 @@ function acn_to_abn(acn::Int)
 
     # transform array of digits to int
     abn = sum(seed[i] * 10^(length(seed) - i) for i ∈ eachindex(seed))
-    return Model.Abn(abn, acn)
+    return abn
 end
 
-function weighted_abn_sum(abn::Int)::Int
+"""
+Perform the validation algorithm described on https://abr.business.gov.au/Help/AbnFormat
+"""
+validate_abn(abn::Any) = throw(ArgumentError("abn argument must be an integer"))
+function validate_abn(abn::Int)::Bool
     @assert length(digits(abn)) == 11 "abn must have 11 digits, had $(length(digits(abn)))"
 
     # int to digit array
@@ -49,12 +63,9 @@ function weighted_abn_sum(abn::Int)::Int
     xs = pushfirst!(ds, popfirst!(ds) - 1)
 
     # weighted sum
-    return sum(xs .* weighting)
-end
+    weighted_sum = sum(xs .* weighting)
 
-function validate_abn!(abn::Abn)
-    abn.is_valid = weighted_abn_sum(abn.abn) % 89 == 0
-    return abn
+    return weighted_sum % 89 == 0
 end
 
 end

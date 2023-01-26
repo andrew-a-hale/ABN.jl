@@ -1,22 +1,21 @@
 using ABN, Test, Pipe
 
 # constructor check
-@test isa(Model.Abn(), Model.Abn)
-@test isa(Model.Abn(1), Model.Abn)
-@test isa(Model.Abn(1, 2), Model.Abn)
-@test isa(Model.Abn(1, 2, false), Model.Abn)
+@test isa(Model.AustralianBusiness(), Model.AustralianBusiness)
+@test isa(Model.AustralianBusiness(1), Model.AustralianBusiness)
+@test isa(Model.AustralianBusiness(1, 2), Model.AustralianBusiness)
+@test isa(Model.AustralianBusiness(1, 2, nothing, false), Model.AustralianBusiness)
 
 # getter check
-@test Model.Abn(1).abn == 1
-@test isnothing(Model.Abn(1).acn)
-@test Model.Abn(nothing, 2).acn == 2
-@test Model.Abn().is_valid == false
+@test Model.AustralianBusiness(1).abn == 1
+@test isnothing(Model.AustralianBusiness(1).acn)
+@test Model.AustralianBusiness().valid_abn == false
 
 # equality check
-x = Model.Abn(1, 2)
-y = Model.Abn(1, 3)
+x = Model.AustralianBusiness(1, 2)
+y = Model.AustralianBusiness(1, 3)
 @test x == y
 
-x = Model.Abn(1, 2)
-y = Model.Abn(2, 2)
+x = Model.AustralianBusiness(1, 2)
+y = Model.AustralianBusiness(2, 2)
 @test x != y
