@@ -4,22 +4,22 @@ import Base: ==
 
 using StructTypes
 
-export AustralianBusiness
+export Business
 
 abstract type AbstractBusiness end
 
-mutable struct AustralianBusiness <: AbstractBusiness
-    abn::Union{Nothing,Int}
-    acn::Union{Nothing,Int}
+mutable struct Business <: AbstractBusiness
+    business_number::Union{Nothing,Int}
+    company_number::Union{Nothing,Int}
     name::Union{Nothing,String}
-    valid_abn::Bool # managed
+    is_valid::Bool # managed
 end
 
-==(x::AustralianBusiness, y::AustralianBusiness) = x.abn == y.abn
-AustralianBusiness() = AustralianBusiness(nothing, nothing, nothing, false)
-AustralianBusiness(abn::Int) = AustralianBusiness(abn, nothing, nothing, false)
-AustralianBusiness(abn::Int, acn::Int, name::String) = AustralianBusiness(abn, acn, name, false)
-StructTypes.StructType(::Type{AustralianBusiness}) = StructTypes.Mutable()
-StructTypes.idproperty(::Type{AustralianBusiness}) = :abn
+==(x::Business, y::Business) = x.business_number == y.business_number
+Business() = Business(nothing, nothing, nothing, false)
+Business(business_number::Int) = Business(business_number, nothing, nothing, false)
+Business(business_number::Union{Nothing,Int}, company_number::Int) = Business(business_number, company_number, nothing, false)
+StructTypes.StructType(::Type{Business}) = StructTypes.Mutable()
+StructTypes.idproperty(::Type{Business}) = :business_number
 
 end

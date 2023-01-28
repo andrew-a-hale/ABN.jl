@@ -1,8 +1,7 @@
 # ABN Microservice
 A small project to learn Julia. This microservice has the following features;
 - Validate ABNs
-- Generate ABNs
-- Convert ACN to ABN
+- Create ABNs from ACNs or from random seed
 
 Details about the check digit algorithm are from https://abr.business.gov.au/Help/AbnFormat  
 Details to generate a ABN are from https://stackoverflow.com/questions/15503188/how-to-generate-an-australian-abn-number

@@ -1,26 +1,30 @@
 using ABN, Test, Pipe
 
-# constructor check
-@test isa(Model.AustralianBusiness(), Model.AustralianBusiness)
-@test isa(Model.AustralianBusiness(1), Model.AustralianBusiness)
-@test isa(Model.AustralianBusiness(1, 2, "A"), Model.AustralianBusiness)
+begin # constructor check
+    @test isa(Model.Business(), Model.Business)
+    @test isa(Model.Business(1), Model.Business)
+    @test_throws MethodError Model.Business("2")
+    @test_throws MethodError Model.Business(1, "2")
+end
 
 # getter check
-business = Model.AustralianBusiness(1, 2, "MyBusiness", false)
-@test business.abn == 1
-@test business.acn == 2
-@test business.valid_abn == false
-@test business.name == "MyBusiness"
+begin 
+    business = Model.Business(1, 2)
+    @test business.business_number == 1
+    @test business.company_number == 2
+    @test business.is_valid == false
+end
 
-# equality check
-x = Model.AustralianBusiness(1, nothing, "A", false)
-y = Model.AustralianBusiness(1, nothing, "B", false)
-@test x == y
+begin # equality check
+    x = Model.Business(1, 1)
+    y = Model.Business(1, 2)
+    @test x == y
 
-x = Model.AustralianBusiness(1, nothing, "A", false)
-y = Model.AustralianBusiness(2, nothing, "B", false)
-@test x != y
+    x = Model.Business(1, 1)
+    y = Model.Business(2, 1)
+    @test x != y
 
-x = Model.AustralianBusiness(nothing, 2, "A", false)
-y = Model.AustralianBusiness(1, 2, "A", false)
-@test x != y
+    x = Model.Business(nothing, 2)
+    y = Model.Business(1, 2)
+    @test x != y
+end

@@ -1,31 +1,30 @@
 using ABN, Test, Pipe
 
-# test generate_abn makes a valid abn
-@test isinteger(Service.generate_abn())
-@test Service.generate_abn() |> Service.validate_abn
+begin # test _get_business makes a valid abn
+    business = Service._get_business()
+    @test isa(business, Model.Business)
+    @test business |> Service.validate_business! |> (x -> x.is_valid)
+end
 
-# test acn->abn
-@test isinteger(Service.acn_to_abn(123456789))
-@test Service.acn_to_abn(123456789) |> Service.validate_abn
-@test_throws AssertionError Service.acn_to_abn(123)
-@test_throws ArgumentError Service.acn_to_abn("123")
+begin # test _get_business_from_company_number
+    @test isa(Service._get_business_from_company_number(123456789), Model.Business)
+    @test Service._get_business_from_company_number(123456789) |> Service.validate_business! |> (x -> x.is_valid)
+    @test_throws AssertionError Service._get_business_from_company_number(123)
+    @test_throws ArgumentError Service._get_business_from_company_number("123")
+end
 
-# test validate_abn
-@test_throws AssertionError Service.validate_abn(1)
-@test_throws ArgumentError Service.validate_abn("a")
-@test Service.validate_abn(11_111_111_111) == false
-
-# batch test - generate_abn, acn_to_abn, and validate_abn
+# batch test - get_business, get_business_from_company_number, and validate_business!
 for i ∈ 1:10_000
-    abn = Service.generate_abn()
-    @test Service.validate_abn(abn)
+    b = Service._get_business()
 
-    acn = abn % (10^9)
-    # above doesn't always generate valid acn's 
-    if (acn < 100_000_000)
+    @test b.business_number |> Service.get_business |> Service.validate_business! |> (x -> x.is_valid)
+
+    company_number = b.business_number % (10^9)
+    # above doesn't always generate a valid company_number 
+    if (company_number < 100_000_000)
         continue
     end
-    
-    abn_from_acn = Service.acn_to_abn(acn)
-    @test Service.validate_abn(abn_from_acn)
+
+    b = Service.get_business(company_number)
+    @test b |> Service.validate_business! |> (x -> x.is_valid)
 end
