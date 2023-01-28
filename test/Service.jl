@@ -11,8 +11,8 @@ using ABN, Test, Pipe
 @test_throws ArgumentError Service.acn_to_abn("123")
 
 # test validate_abn
-@test_throws ArgumentError Service.validate_abn("a")
 @test_throws AssertionError Service.validate_abn(1)
+@test_throws ArgumentError Service.validate_abn("a")
 @test Service.validate_abn(11_111_111_111) == false
 
 # batch test - generate_abn, acn_to_abn, and validate_abn

@@ -14,13 +14,13 @@ function generate_abn()
 end
 
 function acn_to_abn(acn)
-    business = AustralianBusiness(nothing, acn)
-    return HTTP.post(string(SERVER[], "/acn-to-abn"), body=JSON3.write(business))
+    body = (; acn = acn)
+    return HTTP.post(string(SERVER[], "/acn-to-abn"), body=JSON3.write(body))
 end
 
 function validate_abn(abn)
-    business = AustralianBusiness(abn)
-    return HTTP.post(string(SERVER[], "/validate"), body=JSON3.write(business))
+    body = (; abn = abn)
+    return HTTP.post(string(SERVER[], "/validate"), body=JSON3.write(body))
 end
 
 end

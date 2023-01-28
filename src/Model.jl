@@ -18,7 +18,7 @@ end
 ==(x::AustralianBusiness, y::AustralianBusiness) = x.abn == y.abn
 AustralianBusiness() = AustralianBusiness(nothing, nothing, nothing, false)
 AustralianBusiness(abn::Int) = AustralianBusiness(abn, nothing, nothing, false)
-AustralianBusiness(abn::Union{Nothing,Int}, acn::Int) = AustralianBusiness(abn, acn, nothing, false)
+AustralianBusiness(abn::Int, acn::Int, name::String) = AustralianBusiness(abn, acn, name, false)
 StructTypes.StructType(::Type{AustralianBusiness}) = StructTypes.Mutable()
 StructTypes.idproperty(::Type{AustralianBusiness}) = :abn
 
