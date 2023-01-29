@@ -1,5 +1,5 @@
 # ABN Microservice
-A small project to learn Julia and constrast with dotnet. This microservice has the following features;
+A small project in Julia to constrast with dotnet. This microservice has the following features;
 - Validate ABNs
 - Create ABNs from ACNs or from random seed
 
@@ -11,4 +11,7 @@ kubectl apply -f deploy/abn-depl.yaml
 kubectl apply -f deploy/abn-np-srv.yaml
 
 # Todo
-- Integrate with ABR ABN lookup service to get business details
+- Integrate with ABR ABN lookup service (RPC) to get business details
+- Split into 2 services; 
+    - datastore of business records
+    - validator service + lookup service (wrap the ABR ABN lookup endpoint)

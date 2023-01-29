@@ -26,7 +26,7 @@ function _append_check_digit(seed::Vector{Int64})::Vector{Int64}
 end
 
 """
-    _get_business() => ABN.Business
+    _get_business() -> ABN.Business
 
 Used for testing purposes
 
@@ -42,8 +42,11 @@ function _get_business()
 end
 
 """
-    _get_business_from_company_number(company_number::Any) => ArgumentError
-    _get_business_from_company_number(company_number::Int) => ABN.Business
+    _get_business_from_company_number(company_number::Any) -> ArgumentError
+    _get_business_from_company_number(company_number::Int) -> ABN.Business
+
+# Arguments
+* `company_number`: 9 digit company number 
 
 Converts an company number to an business number by appending 2 digits to the front of a company number
 """
@@ -60,7 +63,10 @@ function _get_business_from_company_number(company_number::Int)
 end
 
 """
-    get_business(number::Int) => ABN.Business
+    get_business(number::Int) -> ABN.Business
+
+# Arguments
+* `number`: 9 digit company number or 11 digit business number
 
 Get a business record using either a company or business number
 """
@@ -76,8 +82,12 @@ function get_business(number::Int)
 end
 
 """
-    _validate_business(business_number::Any) => ArgumentError
-    _validate_business(business_number::Int) => Bool
+    _validate_business(business_number::Any) -> ArgumentError
+    _validate_business(business_number::Int) -> Bool
+
+# Arguments
+* `business_number`: 11 digit company number 
+
 Perform the validation algorithm described on https://abr.business.gov.au/Help/AbnFormat
 """
 _validate_business(business_number::Any) = throw(ArgumentError("business_number argument must be an integer"))
@@ -97,7 +107,10 @@ function _validate_business(business_number::Int)::Bool
 end
 
 """
-    validate_business!(business::Business) => ABN.Business
+    validate_business!(business::Business) -> ABN.Business
+    
+# Arguments
+* `business::Business`: Business record
 
 Update a Business record with the result of the business validation
 """
