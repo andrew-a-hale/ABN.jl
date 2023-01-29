@@ -122,7 +122,7 @@ docs(req) = HTTP.Response(200, render_swagger(swagger_document))
 HTTP.register!(ROUTER, "GET", "/docs", docs)
 
 function run()
-    HTTP.serve(ROUTER, "0.0.0.0", 9111)
+    HTTP.serve(ROUTER, "0.0.0.0", 80)
 end
 
 end

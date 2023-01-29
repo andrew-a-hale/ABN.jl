@@ -3,7 +3,7 @@ module Client
 using HTTP, JSON3
 using ..Model
 
-const SERVER = Ref{String}("http://localhost:9111")
+const SERVER = Ref{String}("http://localhost:80")
 
 function health()
     return HTTP.get(string(SERVER[], "/"))
