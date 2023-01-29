@@ -48,15 +48,15 @@ HTTP.register!(ROUTER, "GET", "/", health)
                     application/json:
                         schema:
                             type: object
-                                properties:
-                                    business_number:
-                                        type: integer
-                                    company_number:
-                                        type: integer
-                                    name:
-                                        type: string
-                                    is_valid:
-                                        type: bool
+                            properties:
+                                business_number:
+                                    type: integer
+                                company_number:
+                                    type: integer
+                                name:
+                                    type: string
+                                is_valid:
+                                    type: boolean
 """
 function get_business(req)
     try
@@ -87,9 +87,9 @@ HTTP.register!(ROUTER, "POST", "/business", get_business)
             '200': 
                 description: Validate a Business 
                 content:
-                application/json:
-                    schema:
-                        type: object
+                    application/json:
+                        schema:
+                            type: object
                             properties:
                                 business_number:
                                     type: integer
@@ -98,9 +98,9 @@ HTTP.register!(ROUTER, "POST", "/business", get_business)
                                 name:
                                     type: string
                                 is_valid:
-                                    type: bool
+                                    type: boolean
             '400':
-                description: Invalid Business
+                description: Invalid Business         
 """
 function validate_business(req)
     try

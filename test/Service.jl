@@ -1,16 +1,16 @@
 using ABN, Test, Pipe
 
 begin # test _get_business makes a valid abn
-    business = Service._get_business()
+    business = Service.get_business(39875518541)
     @test isa(business, Model.Business)
     @test business |> Service.validate_business! |> (x -> x.is_valid)
 end
 
 begin # test _get_business_from_company_number
-    @test isa(Service._get_business_from_company_number(123456789), Model.Business)
-    @test Service._get_business_from_company_number(123456789) |> Service.validate_business! |> (x -> x.is_valid)
-    @test_throws AssertionError Service._get_business_from_company_number(123)
-    @test_throws ArgumentError Service._get_business_from_company_number("123")
+    @test isa(Service.get_business(123456789), Model.Business)
+    @test Service.get_business(123456789) |> Service.validate_business! |> (x -> x.is_valid)
+    @test_throws ArgumentError Service.get_business(123)
+    @test_throws ArgumentError Service.get_business("123")
 end
 
 # batch test - get_business, get_business_from_company_number, and validate_business!
